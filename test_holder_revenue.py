@@ -22,7 +22,10 @@ class FakeResp:
 
 class HolderRevenueTest(unittest.TestCase):
     def setUp(self):
-        raw = json.loads(Path(__file__).with_name("testdata").joinpath("snapshot.json").read_text())
+        fixture = Path(__file__).with_name("snapshot.json")
+        if not fixture.exists():
+            fixture = Path(__file__).with_name("testdata").joinpath("snapshot.json")
+        raw = json.loads(fixture.read_text())
         self.payloads = raw
 
     def opener(self, req, timeout=30):
